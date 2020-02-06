@@ -65,7 +65,7 @@ esac
 ````
 
 
-##Using Environment-Variables
+## Using Environment-Variables
 It is never a good idea or practise to store sensitive credentials inside your repository. Let's use an example to make it clear:
 Set the database connection information for your wordpress site using environment variables.
 
