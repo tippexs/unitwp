@@ -63,3 +63,56 @@ case $1 in
   ;;
 esac
 ````
+
+
+##Using Environment-Variables
+It is never a good idea or practise to store sensitive credentials inside your repository. Let's use an example to make it clear:
+Set the database connection information for your wordpress site using environment variables.
+
+Environent variables can be set
+ - While starting the container instance (https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file)
+ - Using a docker-compose file (https://docs.docker.com/compose/environment-variables/)
+ - Using the NGINX Unit config or the NGINX Unit API to specify them.
+ 
+Example of NGINX Unit configuration with environments:
+NOTE: If you want to push your Unit configuration to git, do not store passwords here. Use the dynamic reconfiguration methods instead
+(https://unit.nginx.org/configuration/#quick-start)
+
+
+````json
+  "applications": {
+    "application": {
+      "type": "php",
+      "options": {
+        "file": "/etc/php.ini",
+        "admin": {
+          "upload_max_filesize": "20M"
+        }
+      },
+      "environment": {
+        "DB_HOST": "mariadb",
+        "SOMETHING": "else"
+      },
+      "user": "wordpress",
+      "group": "wordpress",
+      "root": "/var/apphome"
+    }
+  }
+````
+
+To access your variables (e.g. in your wp-config.php) you can simply use something like:
+````php
+<?php
+    /** The name of the database for WordPress */
+    define('DB_NAME', isset ($_ENV['DB_NAME']) ? $_ENV['DB_NAME'] : 'database');
+    
+    /** MySQL database username */
+    define('DB_USER',  isset ($_ENV['DB_USER']) ? $_ENV['DB_USER'] : 'user');
+    
+    /** MySQL database password */
+    define('DB_PASSWORD', isset ($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : 'password');
+    
+    /** MySQL hostname */
+    define('DB_HOST', isset ($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : 'localhost' );
+````
+
