@@ -17,7 +17,7 @@ services:
 #    build:
 #        context: ./
 #        dockerfile: Dockerfile
-    image: tippexs/wwp:devbuild
+    image: tippexs/wwp:latest
     environment:
       DB_USER: wordpressdev
     volumes:

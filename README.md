@@ -1,5 +1,5 @@
 # unitwp
-NGINX Unit PHP Wordpress buildstack. This will create a docker container image, running wordpress and expose it on port 8080.
+NGINX Unit PHP Wordpress buildstack. This will create a docker container image, running wordpress and expose it on port 8080. The production ready container image does not include a database. If you need a database along with your WP installation, check out the dev folder.
 
 
 ## Before you start
@@ -64,6 +64,16 @@ case $1 in
 esac
 ````
 
+## Development Environment
+NGINX Unit is great for creating a local development environment. E.g it's simple to change the PHP Version in use just by calling the UNIT API.
+
+Anything you need is in the dev folder. Make sure you change the folder permissions of the wordpress folder to 777 to make it work with the UNIT run-user.
+On the production build, the permissions are set during the build phase.
+
+The local dev version will setup the NGINX Unit container as well as a new MariaDB Container for you using docker-compose.
+
+Start your local environment:
+`` ./run-local.sh dev``
 
 ## Using Environment-Variables
 It is never a good idea or practise to store sensitive credentials inside your repository. Let's use an example to make it clear:
