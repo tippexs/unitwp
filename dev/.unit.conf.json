@@ -1,0 +1,91 @@
+{
+  "listeners": {
+    "*:8080": {
+      "pass": "routes/wordpress"
+    }
+  },
+  "routes": {
+    "wordpress": [
+      {
+        "match": {
+          "uri": [
+            "*.php",
+            "*.php/*",
+            "/wp-admin/"
+          ]
+        },
+        "action": {
+          "pass": "applications/wp_direct"
+        }
+      },
+      {
+        "match": {
+          "uri": [
+            "/wp-admin/*",
+            "/wp-content/*",
+            "/wp-includes/*"
+          ]
+        },
+        "action": {
+          "share": "/var/apphome/wordpress"
+        }
+      },
+      {
+        "action": {
+          "pass": "applications/wp_index"
+        }
+      }
+    ]
+  },
+  "applications": {
+    "wp_direct": {
+      "type": "php",
+      "options": {
+        "file": "/etc/php.ini",
+        "admin": {
+          "upload_max_filesize": "20M"
+        }
+      },
+      "environment": {
+        "DB_HOST": "mariadb"
+      },
+      "user": "wordpress",
+      "group": "wordpress",
+      "root": "/var/apphome/wordpress"
+    },
+    "wp_index": {
+      "type": "php",
+      "options": {
+        "file": "/etc/php.ini",
+        "admin": {
+          "upload_max_filesize": "20M"
+        }
+      },
+      "environment": {
+        "DB_HOST": "mariadb"
+      },
+      "user": "wordpress",
+      "group": "wordpress",
+      "root": "/var/apphome/wordpress",
+      "script": "index.php"
+    }
+  },
+  "settings": {
+    "http": {
+      "header_read_timeout": 10,
+      "body_read_timeout": 10,
+      "send_timeout": 10,
+      "idle_timeout": 120,
+      "max_body_size": 6291456,
+      "static": {
+        "mime_types": {
+          "text/plain": [
+            ".log",
+            "README",
+            "CHANGES"
+          ]
+        }
+      }
+    }
+  }
+}

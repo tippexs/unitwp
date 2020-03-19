@@ -1,0 +1,27 @@
+# Use root/example as user/password credentials
+version: "3.7"
+services:
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./db-volume:/var/lib/mysql
+    environment:
+      MYSQL_USER: wordpressdev
+      MYSQL_PASSWORD: wordpressdev
+      MYSQL_DATABASE: wiewir
+      MYSQL_ROOT_PASSWORD: devpassword
+  wordpress:
+#    build:
+#        context: ./
+#        dockerfile: Dockerfile
+    image: tippexs/wwp:devbuild
+    environment:
+      DB_USER: wordpressdev
+    volumes:
+      - ../wordpress:/var/apphome/wordpress
+      - ../vendor:/var/apphome/vendor
+    ports:
+      - 8044:8080
