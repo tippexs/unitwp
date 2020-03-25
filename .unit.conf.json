@@ -19,20 +19,11 @@
         }
       },
       {
-        "match": {
-          "uri": [
-            "/wp-admin/*",
-            "/wp-content/*",
-            "/wp-includes/*"
-          ]
-        },
         "action": {
-          "share": "/var/apphome"
-        }
-      },
-      {
-        "action": {
-          "pass": "applications/wp_index"
+          "share": "/var/apphome",
+          "fallback": {
+            "pass": "applications/wp_index"
+          }
         }
       }
     ]
