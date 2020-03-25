@@ -1,4 +1,4 @@
-FROM nginx/unit:1.1☺6.0-php7.3
+FROM nginx/unit:1.16.0-php7.3
 MAINTAINER tippexs
 RUN mkdir /var/apphome/ && groupadd -r wordpress && useradd --no-log-init -r -g wordpress wordpress && \
     chown -R wordpress:wordpress /var/apphome/ && \
