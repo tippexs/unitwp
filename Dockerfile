@@ -1,4 +1,4 @@
-FROM nginx/unit:1.16.0-php7.3
+FROM nginx/unit:1.18.0-php7.3
 RUN mkdir /var/apphome/ && groupadd -r wordpress && useradd --no-log-init -r -g wordpress wordpress && \
     chown -R wordpress:wordpress /var/apphome/ && \
     apt-get update && apt-get install --no-install-recommends --no-install-suggests -y php7.3-mysql php7.3-gd && \

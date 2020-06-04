@@ -15,50 +15,40 @@
           ]
         },
         "action": {
-          "pass": "applications/wp_direct"
+          "pass": "applications/wordpress/direct"
         }
       },
       {
         "action": {
           "share": "/var/apphome/wordpress",
           "fallback": {
-            "pass": "applications/wp_index"
+            "pass": "applications/wordpress/index"
           }
         }
       }
     ]
   },
   "applications": {
-    "wp_direct": {
+    "wordpress": {
       "type": "php",
+      "user": "wordpress",
+      "group": "wordpress",
+      "targets": {
+        "direct": {
+          "root": "/var/apphome/wordpress"
+        },
+        "index": {
+          "root": "/var/apphome/wordpress",
+          "script": "index.php"
+        }
+      },
       "options": {
         "file": "/etc/php.ini",
         "admin": {
-          "upload_max_filesize": "20M"
+          "upload_max_filesize": "20M",
+          "expose_php": "0"
         }
-      },
-      "environment": {
-        "DB_HOST": "mariadb"
-      },
-      "user": "wordpress",
-      "group": "wordpress",
-      "root": "/var/apphome/wordpress"
-    },
-    "wp_index": {
-      "type": "php",
-      "options": {
-        "file": "/etc/php.ini",
-        "admin": {
-          "upload_max_filesize": "20M"
-        }
-      },
-      "environment": {
-        "DB_HOST": "mariadb"
-      },
-      "user": "wordpress",
-      "group": "wordpress",
-      "root": "/var/apphome/wordpress",
-      "script": "index.php"
+      }
     }
   },
   "settings": {

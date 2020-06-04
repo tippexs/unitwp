@@ -18,7 +18,7 @@ In case your WP directory is different from `wordpress` adjust the Dockerfile:
 YOURWPHOME = WP code-base directory
 
 ````shell script
-FROM nginx/unit:1.16.0-php7.3
+FROM nginx/unit:1.18.0-php7.3
 MAINTAINER tippexs
 RUN mkdir /var/apphome/ && groupadd -r wordpress && useradd --no-log-init -r -g wordpress wordpress && \
     chown -R wordpress:wordpress /var/apphome/ && \
@@ -93,19 +93,18 @@ NOTE: If you want to push your Unit configuration to git, do not store passwords
   "applications": {
     "application": {
       "type": "php",
-      "options": {
-        "file": "/etc/php.ini",
-        "admin": {
-          "upload_max_filesize": "20M"
-        }
-      },
       "environment": {
         "DB_HOST": "mariadb",
         "SOMETHING": "else"
       },
       "user": "wordpress",
       "group": "wordpress",
-      "root": "/var/apphome"
+      "options": {
+        "file": "/etc/php.ini",
+        "admin": {
+          "upload_max_filesize": "20M"
+        }
+      },
     }
   }
 ````

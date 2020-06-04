@@ -3,7 +3,7 @@ set -ex
 case $1 in
 "dev")
   echo "Building local image and mounting codebase..."
-  docker build -t tippexs/wwp:latest .
+  docker build --no-cache -t tippexs/wwp:latest .
   docker-compose up
   ;;
 "stop")
